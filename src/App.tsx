@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import HeroesList from "./pages/HeroesList";
+import HeroDetail from "./pages/HeroDetail";
+import CreateHero from "./pages/CreateHero";
+import Login from "./pages/Login";
+import NotFound from "./pages/NotFound";
+import NavBar from "./components/NavBar";
+
+const queryClient = new QueryClient();
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <QueryClientProvider client={queryClient}>
+            <Router>
+                <NavBar />
+                <Routes>
+                    <Route path="/" element={<HeroesList />} />
+                    <Route path="/heroes/:id" element={<HeroDetail />} />
+                    <Route path="/create" element={<CreateHero />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+            </Router>
+        </QueryClientProvider>
+    );
 }
 
 export default App;
