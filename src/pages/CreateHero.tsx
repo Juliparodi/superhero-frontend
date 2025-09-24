@@ -1,15 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createHero, Hero } from "../api/heroes";
+import {createHero, Hero} from "../api/heroes";
 import HeroForm from "../components/HeroForm";
 
 export default function CreateHero() {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
 
-    const mutation = useMutation((data: Hero) => createHero(data), {
+    const createMutation = useMutation<Hero, Error, Hero>({
+        mutationFn: (data) => createHero(data),
         onSuccess: () => {
-            queryClient.invalidateQueries(["heroes"]);
+            queryClient.invalidateQueries({ queryKey: ["heroes"] });
             navigate("/");
         },
     });
@@ -17,7 +18,7 @@ export default function CreateHero() {
     return (
         <div className="p-4">
             <h1 className="text-2xl font-bold mb-4">Create New Hero</h1>
-            <HeroForm onSubmit={(data) => mutation.mutate(data)} />
+            <HeroForm onSubmit={(data) => createMutation.mutate(data)} />
         </div>
     );
 }
