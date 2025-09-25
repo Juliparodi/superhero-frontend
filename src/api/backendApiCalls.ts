@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "./axiosInstance";
 
 const API_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -12,26 +12,26 @@ export interface Hero {
 }
 
 export const fetchHeroes = async () => {
-    const res = await axios.get<Hero[]>(`${API_URL}/superheroes`);
+    const res = await api.get("/superheroes");
     return res.data;
 };
 
 export const fetchHero = async (id: number) => {
-    const res = await axios.get<Hero>(`${API_URL}/superheroes/${id}`);
+    const res = await api.get<Hero>(`${API_URL}/superheroes/${id}`);
     return res.data;
 };
 
 export const createHero = async (hero: Hero) => {
-    const res = await axios.post<Hero>(`${API_URL}/hero`, hero);
+    const res = await api.post<Hero>(`${API_URL}/superheroes/hero`, hero);
     return res.data;
 };
 
 export const updateHero = async (id: number, hero: Hero) => {
-    const res = await axios.put<Hero>(`${API_URL}/hero/${id}`, hero);
+    const res = await api.put<Hero>(`${API_URL}/superheroes/hero/${id}`, hero);
     return res.data;
 };
 
 export const deleteHero = async (id: number) => {
-    const res = await axios.delete(`${API_URL}/hero/${id}`);
+    const res = await api.delete(`${API_URL}/superheroes/hero/${id}`);
     return res.data;
 };

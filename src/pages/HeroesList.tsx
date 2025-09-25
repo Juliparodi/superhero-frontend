@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchHeroes, Hero } from "../api/heroes";
+import { fetchHeroes, Hero } from "../api/backendApiCalls";
 import HeroTable from "../components/HeroTable";
 import Skeleton from "../components/Skeleton";
 

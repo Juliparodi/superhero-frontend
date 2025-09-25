@@ -1,4 +1,4 @@
-import { Hero } from "../api/heroes";
+import { Hero } from "../api/backendApiCalls";
 import { Link } from "react-router-dom";
 
 export default function HeroCard({ hero }: { hero: Hero }) {
@@ -7,7 +7,7 @@ export default function HeroCard({ hero }: { hero: Hero }) {
             <h3 className="font-bold text-lg">{hero.name}</h3>
             <p>{hero.description}</p>
             <p className="text-gray-500">Born: {hero.birthDate}</p>
-            <Link to={`/heroes/${hero.id}`} className="text-blue-500 mt-2 block">View / Edit</Link>
+            <Link to={`/heroes/${hero.id}`} className="text-blue-500 mt-2 block">View / Edit / Delete</Link>
         </div>
     );
 }

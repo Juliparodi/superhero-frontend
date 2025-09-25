@@ -1,27 +1,29 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchHero, updateHero, deleteHero, Hero } from "../api/heroes";
+import { fetchHero, updateHero, deleteHero, Hero } from "../api/backendApiCalls";
 import HeroForm from "../components/HeroForm";
+import {useState} from "react";
 
 export default function HeroDetail() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-    // ✅ Fetch hero with React Query v4 options object syntax
     const { data: hero, isLoading, isError, error } = useQuery<Hero, Error>({
         queryKey: ["hero", id],
         queryFn: () => fetchHero(Number(id)),
         staleTime: 1000 * 60, // 1 minute cache
     });
 
-    // ✅ Update hero mutation
     const updateMutation = useMutation<Hero, Error, Hero>({
         mutationFn: (data) => updateHero(Number(id), data),
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["heroes"] }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["heroes"] });
+            setSuccessMessage("Hero updated successfully!"); // ✅ Show success message
+        }
     });
 
-    // ✅ Delete hero mutation
     const deleteMutation = useMutation<void, Error>({
         mutationFn: () => deleteHero(Number(id)),
         onSuccess: () => navigate("/"),
@@ -38,6 +40,12 @@ export default function HeroDetail() {
     return (
         <div className="p-4">
             <h1 className="text-2xl font-bold mb-4">Hero Detail</h1>
+
+            {successMessage && (
+                <div className="bg-green-100 text-green-800 p-2 rounded mb-4">
+                    {successMessage}
+                </div>
+            )}
 
             <HeroForm
                 initialValues={hero}

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {createHero, Hero} from "../api/heroes";
+import {createHero, Hero} from "../api/backendApiCalls";
 import HeroForm from "../components/HeroForm";
 
 export default function CreateHero() {

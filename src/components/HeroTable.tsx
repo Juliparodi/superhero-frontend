@@ -1,4 +1,4 @@
-import { Hero } from "../api/heroes";
+import { Hero } from "../api/backendApiCalls";
 import HeroCard from "./HeroCard";
 
 interface Props {

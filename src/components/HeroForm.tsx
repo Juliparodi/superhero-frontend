@@ -1,20 +1,18 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Hero } from "../api/heroes";
+import { Hero } from "../api/backendApiCalls";
 
-// Zod schema for validation
 const heroSchema = z.object({
     name: z.string().min(1, "Name is required"),
     description: z.string().min(1, "Description is required"),
     birthDate: z.string().min(1, "BirthDate is required"),
 });
 
-// Props interface including isSubmitting
 interface HeroFormProps {
     initialValues?: Hero;
     onSubmit: (data: Hero) => void;
-    isSubmitting?: boolean; // optional loading flag
+    isSubmitting?: boolean;
 }
 
 export default function HeroForm({
